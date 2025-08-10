@@ -17,9 +17,7 @@ const app = express();
 
 await connectCloudinary();
 // allow multiple origins
-const allowedOrigins = ["http://localhost:5173",
-  "https://ecommerse-m-8xsr.vercel.app"
-];
+const allowedOrigins = [];
 //middlewares
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(cookieParser());
