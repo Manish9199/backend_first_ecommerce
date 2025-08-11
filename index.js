@@ -16,16 +16,25 @@ import { connectCloudinary } from "./config/cloudinary.js";
 const app = express();
 
 await connectCloudinary();
-// allow multiple origins
+// allow multiple origins (prod + local + vercel preview deployments)
 const allowedOrigins = [
   "https://ecommerse-m-avgr.vercel.app",
   "http://localhost:5173",
   "http://localhost:3000",
   "http://127.0.0.1:5173",
-  "http://127.0.0.1:3000"
+  "http://127.0.0.1:3000",
 ];
+
+// Allow Vercel preview deployments for this project (e.g., ecommerse-m-avgr-xxxxx-<account>.vercel.app)
+const allowedOriginPatterns = [/^https:\/\/ecommerse-m-avgr.*\.vercel\.app$/];
+
 //middlewares
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(
+  cors({
+    origin: [...allowedOrigins, ...allowedOriginPatterns],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 
